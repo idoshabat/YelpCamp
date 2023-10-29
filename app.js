@@ -1,8 +1,9 @@
 const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
+const ejsMate = require('ejs-mate');
 const Campground = require('./models/campground');
-const methodOverride = require('method-override')
+const methodOverride = require('method-override');
 
 mongoose.connect('mongodb://127.0.0.1:27017/yelp-camp')
 
@@ -14,7 +15,7 @@ db.once("open" , ()=>{
 
 const app = express();
 
-
+app.engine('ejs' , ejsMate)
 app.set('views' , path.join(__dirname, 'views'));
 app.set('view engine' , 'ejs');
 
@@ -32,7 +33,7 @@ app.get('/campgrounds' , async (req,res) =>{
     res.render('campgrounds/index' , {campgrounds})
 })
 
-app.get('/campgrounds/new' , (req,res) =>{
+app.get('/campgrounds/new' , (req,res) =>{ 
     res.render('campgrounds/new')
 })
 
